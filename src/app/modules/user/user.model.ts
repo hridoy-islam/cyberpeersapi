@@ -156,8 +156,6 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     isStudent: { type: Boolean },
     isUnderStatePensionAge: { type: Boolean },
-    
-   
 
     // Employment
     isEmployed: { type: String },
@@ -242,7 +240,7 @@ const userSchema = new Schema<TUser, UserModel>(
     workExperience: { type: [String], default: [] },
     bankStatement: { type: [String], default: [] },
     personalStatement: { type: [String], default: [] },
-
+    cvResume: { type: String },
     //terms and conditions
     declarationCorrectUpload: { type: Boolean },
     declarationContactReferee: { type: Boolean },
@@ -283,7 +281,7 @@ userSchema.pre("save", async function (next) {
 });
 
 // set '' after saving password
-userSchema.post("save", function (doc:any, next) {
+userSchema.post("save", function (doc: any, next) {
   doc.password = "";
   next();
 });

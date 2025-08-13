@@ -300,6 +300,7 @@ export interface TUser {
   workExperience: string[];
   bankStatement: string[];
   personalStatement: string[];
+  cvResume:string;
 
   // Terms & Declarations
   declarationCorrectUpload?: boolean;
