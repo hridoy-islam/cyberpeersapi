@@ -55,7 +55,7 @@ const checkLogin = async (payload: TLogin, req: any) => {
         isUsed: false,
       });
 
-      const emailSubject = "Verify Your Email";
+      const emailSubject = "Verify Your CyberPeers Account";
       await sendEmail(
         foundUser.email,
         "verify_email",
@@ -410,7 +410,7 @@ const requestOtp = async (email: string) => {
     otpExpiry,
     isUsed: false,
   });
-  const emailSubject = "Your Password Reset OTP";
+  const emailSubject = "Reset Your Account Password";
 
   await sendEmail(
     email,
