@@ -39,6 +39,7 @@ app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use("/uploads", express_1.default.static("uploads"));
+app.use(express_1.default.static('public'));
 // app.use((req, res, next) => {
 //   // Set the Access-Control-Allow-Origin header to allow requests from any origin
 //   res.setHeader("Access-Control-Allow-Origin", "*");

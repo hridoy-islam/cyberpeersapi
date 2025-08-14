@@ -32,7 +32,7 @@ const sendEmail = (to, template, subject, name, otp, title) => __awaiter(void 0,
             title: title,
         });
         const mailOptions = {
-            from: "noreply@cyberpeers.co.uk",
+            from: '"CyberPeers" <noreply@cyberpeers.co.uk>',
             to,
             subject,
             html: html,

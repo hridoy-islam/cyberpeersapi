@@ -28,6 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
+app.use(express.static('public'));
 
 // app.use((req, res, next) => {
 //   // Set the Access-Control-Allow-Origin header to allow requests from any origin

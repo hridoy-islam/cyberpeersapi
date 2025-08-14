@@ -22,7 +22,7 @@ const storage = new storage_1.Storage({
     keyFilename: "./work.json",
     projectId: "vast-pride-453709-n7",
 });
-const bucketName = "watney";
+const bucketName = "cyberpeerscareer";
 const bucket = storage.bucket(bucketName);
 const UploadDocumentToGCS = (file, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { entityId, file_type } = payload;

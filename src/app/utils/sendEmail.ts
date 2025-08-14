@@ -30,7 +30,7 @@ export const sendEmail = async (
       }
     );
     const mailOptions = {
-      from: "noreply@cyberpeers.co.uk",
+      from:'"CyberPeers" <noreply@cyberpeers.co.uk>',
       to,
       subject,
       html: html,
