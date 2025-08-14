@@ -47,7 +47,7 @@ const checkLogin = (payload, req) => __awaiter(void 0, void 0, void 0, function*
                 otpExpiry,
                 isUsed: false,
             });
-            const emailSubject = "Validate Your Profile with OTP";
+            const emailSubject = "Verify Your Email";
             yield (0, sendEmail_1.sendEmail)(foundUser.email, "verify_email", emailSubject, foundUser.name, otp);
         }
         const jwtPayload = {
@@ -169,12 +169,7 @@ const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
         //   payload.name,
         //   otp
         // );
-        // await sendEmail(
-        //   payload.email,
-        //   "welcome_template",
-        //   "Welcome to Task Planner",
-        //   payload.name
-        // );
+        yield (0, sendEmail_1.sendEmail)(payload.email, "welcome_template", "Welcome to CyberPeers", payload.name);
     }
     catch (error) {
         console.error("Error sending welcome email:", error);
@@ -192,8 +187,8 @@ const EmailSendOTP = (email) => __awaiter(void 0, void 0, void 0, function* () {
         otpExpiry,
         isUsed: false,
     });
-    const emailSubject = "Your Password Reset OTP";
-    yield (0, sendEmail_1.sendEmail)(email, "reset_password_template", emailSubject, foundUser.name, otp);
+    const emailSubject = "CyberPeers OTP – Please Verify Your Account";
+    yield (0, sendEmail_1.sendEmail)(email, "resend_otp", emailSubject, foundUser.name, otp);
     yield user_model_1.User.updateOne({ email }, { otp, otpExpiry });
 });
 const verifyEmailIntoDB = (email, otp) => __awaiter(void 0, void 0, void 0, function* () {
@@ -217,10 +212,12 @@ const verifyEmailIntoDB = (email, otp) => __awaiter(void 0, void 0, void 0, func
         email: foundUser.email,
         name: foundUser.name,
         role: foundUser.role,
-        isValided: foundUser.isValided
+        isValided: foundUser.isValided,
     };
     const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expires_in);
     const refreshToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_refresh_secret, config_1.default.jwt_refresh_expires_in);
+    const emailSubject = "Your Account Has Been Verified";
+    yield (0, sendEmail_1.sendEmail)(foundUser.email, "complete_verification", emailSubject, foundUser.name);
     return {
         accessToken,
         refreshToken,
@@ -255,8 +252,10 @@ const resetPassword = (payload) => __awaiter(void 0, void 0, void 0, function* (
     if (!user) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "This user is not found !");
     }
+    const emailSubject = "Your CyberPeers Account Password Has Been Changed";
     user.password = payload.password;
     yield user.save();
+    yield (0, sendEmail_1.sendEmail)(user.email, "password_change", emailSubject, user.name);
     return { message: "Password updated successfully" };
 });
 const ChangePassword = (userId, currentPassword, newPassword) => __awaiter(void 0, void 0, void 0, function* () {
@@ -350,5 +349,5 @@ exports.AuthServices = {
     ChangePassword,
     validateOtp,
     requestOtp,
-    personalInformationIntoDB
+    personalInformationIntoDB,
 };

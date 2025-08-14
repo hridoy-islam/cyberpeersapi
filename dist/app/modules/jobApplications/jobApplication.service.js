@@ -29,6 +29,8 @@ const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
 const jobApplication_model_1 = require("./jobApplication.model");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const sendEmail_1 = require("../../utils/sendEmail");
+const moment_1 = __importDefault(require("moment"));
+const sendEmailAdmin_1 = require("../../utils/sendEmailAdmin");
 const getAllJobApplicationFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = query, otherQueryParams = __rest(query, ["searchTerm"]);
     const processedQuery = Object.assign({}, otherQueryParams);
@@ -63,7 +65,7 @@ const updateJobApplicationIntoDB = (id, payload) => __awaiter(void 0, void 0, vo
     return result;
 });
 const createJobApplicationIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f, _g;
     if (!payload.jobId || !payload.applicantId) {
         throw new Error("Both jobId and applicantId are required");
     }
@@ -78,16 +80,27 @@ const createJobApplicationIntoDB = (payload) => __awaiter(void 0, void 0, void 0
     const result = yield jobApplication_model_1.JobApplication.create(payload);
     const populatedResult = yield jobApplication_model_1.JobApplication.findById(result._id)
         .populate("jobId", "jobTitle")
-        .populate("applicantId", "name email");
+        .populate("applicantId", "name email availableFromDate phone dateOfBirth countryOfResidence");
     if (!populatedResult) {
         throw new Error("Failed to populate job application");
     }
     const title = (_a = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.jobId) === null || _a === void 0 ? void 0 : _a.jobTitle;
     const applicantName = (_b = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _b === void 0 ? void 0 : _b.name;
     const applicantEmail = (_c = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _c === void 0 ? void 0 : _c.email;
-    const emailSubject = `New Application for ${title}`;
+    const phone = (_d = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _d === void 0 ? void 0 : _d.phone;
+    const countryOfResidence = (_e = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _e === void 0 ? void 0 : _e.countryOfResidence;
+    const formattedCountryOfResidence = countryOfResidence
+        ? countryOfResidence.charAt(0).toUpperCase() + countryOfResidence.slice(1)
+        : '';
+    const dob = (_f = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _f === void 0 ? void 0 : _f.dateOfBirth;
+    const formattedDob = dob ? (0, moment_1.default)(dob).format("DD MMM, YYYY") : "N/A";
+    const availableFromDate = (_g = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _g === void 0 ? void 0 : _g.availableFromDate;
+    const formattedAvailableFromDate = availableFromDate ? (0, moment_1.default)(availableFromDate).format("DD MMM, YYYY") : "N/A";
+    const adminSubject = ` New Candidate Submission: ${title}`;
+    const emailSubject = `Thank you for applying to Cyberpeers`;
     const otp = "";
     yield (0, sendEmail_1.sendEmail)(applicantEmail, "job-application", emailSubject, applicantName, otp, title);
+    yield (0, sendEmailAdmin_1.sendEmailAdmin)("contact@cyberpeers.co.uk", "job-application-admin", adminSubject, applicantName, otp, title, applicantEmail, phone, formattedCountryOfResidence, formattedDob, formattedAvailableFromDate);
     return result;
 });
 exports.JobApplicationServices = {
