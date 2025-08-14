@@ -58,7 +58,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://cyberpeers.netlify.app",
-      "http://career.cyberpeers.co.uk"
+      "https://career.cyberpeers.co.uk"
       
     ],
     credentials: true,
