@@ -114,7 +114,7 @@ const formattedCountryOfResidence = countryOfResidence
   const formattedAvailableFromDate= availableFromDate ? moment(availableFromDate).format("DD MMM, YYYY") : "N/A";
 
 
-  const adminSubject = ` New Candidate Submission: ${title}`;
+  const adminSubject = `New Application Received: ${title}`;
 
 
 

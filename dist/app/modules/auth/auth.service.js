@@ -47,7 +47,7 @@ const checkLogin = (payload, req) => __awaiter(void 0, void 0, void 0, function*
                 otpExpiry,
                 isUsed: false,
             });
-            const emailSubject = "Verify Your Email";
+            const emailSubject = "Verify Your CyberPeers Account";
             yield (0, sendEmail_1.sendEmail)(foundUser.email, "verify_email", emailSubject, foundUser.name, otp);
         }
         const jwtPayload = {
@@ -285,7 +285,7 @@ const requestOtp = (email) => __awaiter(void 0, void 0, void 0, function* () {
         otpExpiry,
         isUsed: false,
     });
-    const emailSubject = "Your Password Reset OTP";
+    const emailSubject = "Reset Your Account Password";
     yield (0, sendEmail_1.sendEmail)(email, "reset_password_template", emailSubject, foundUser.name, otp);
 });
 const validateOtp = (email, otp) => __awaiter(void 0, void 0, void 0, function* () {

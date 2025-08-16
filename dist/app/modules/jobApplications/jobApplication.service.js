@@ -96,7 +96,7 @@ const createJobApplicationIntoDB = (payload) => __awaiter(void 0, void 0, void 0
     const formattedDob = dob ? (0, moment_1.default)(dob).format("DD MMM, YYYY") : "N/A";
     const availableFromDate = (_g = populatedResult === null || populatedResult === void 0 ? void 0 : populatedResult.applicantId) === null || _g === void 0 ? void 0 : _g.availableFromDate;
     const formattedAvailableFromDate = availableFromDate ? (0, moment_1.default)(availableFromDate).format("DD MMM, YYYY") : "N/A";
-    const adminSubject = ` New Candidate Submission: ${title}`;
+    const adminSubject = `New Application Received: ${title}`;
     const emailSubject = `Thank you for applying to Cyberpeers`;
     const otp = "";
     yield (0, sendEmail_1.sendEmail)(applicantEmail, "job-application", emailSubject, applicantName, otp, title);
