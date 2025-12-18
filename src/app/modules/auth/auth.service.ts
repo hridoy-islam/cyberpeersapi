@@ -272,6 +272,7 @@ const EmailSendOTP = async (email: string) => {
   const emailSubject = "CyberPeers OTP – Please Verify Your Account";
 
   await sendEmail(email, "resend_otp", emailSubject, foundUser.name, otp);
+   
 
   await User.updateOne({ email }, { otp, otpExpiry });
 };
