@@ -17,10 +17,10 @@ export const sendEmailAdmin = async (
 ) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.ionos.co.uk",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
-      user: "contact@cyberpeers.co.uk",
+      user: "noreply@cyberpeers.co.uk",
       pass: "4FROdCo?!)tT",
     },
   });
@@ -40,7 +40,7 @@ export const sendEmailAdmin = async (
       }
     );
     const mailOptions = {
-      from:'"CyberPeers" <contact@cyberpeers.co.uk>',
+      from:'"CyberPeers" <noreply@cyberpeers.co.uk>',
       to,
       subject,
       html: html,

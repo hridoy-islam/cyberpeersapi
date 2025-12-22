@@ -17,12 +17,12 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const ejs_1 = __importDefault(require("ejs"));
 const sendEmail = (to, template, subject, name, otp, title) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
-        host: "mail.cyberpeers.co.uk",
-        port: 465,
-        secure: true,
+        host: "smtp.ionos.co.uk",
+        port: 587,
+        secure: false,
         auth: {
             user: "noreply@cyberpeers.co.uk",
-            pass: "ROr5e205EhQ(P@,C",
+            pass: "4FROdCo?!)tT",
         },
     });
     try {

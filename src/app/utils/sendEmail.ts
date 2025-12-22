@@ -10,15 +10,15 @@ export const sendEmail = async (
   otp?: string,
   title?: string
 ) => {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ionos.co.uk",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "contact@cyberpeers.co.uk",
-      pass: "4FROdCo?!)tT",
-    },
-  });
+ const transporter = nodemailer.createTransport({
+     host: "smtp.ionos.co.uk",
+     port: 587,
+     secure: false,
+     auth: {
+       user: "noreply@cyberpeers.co.uk",
+       pass: "4FROdCo?!)tT",
+     },
+   });
 
 
 
@@ -32,7 +32,7 @@ export const sendEmail = async (
       }
     );
     const mailOptions = {
-      from:'"CyberPeers" <contact@cyberpeers.co.uk>',
+      from:'"CyberPeers" <noreply@cyberpeers.co.uk>',
       to,
       subject,
       html: html,
